@@ -5,7 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { useLessonStore, selectSelectedModule, selectSelectedLesson } from "@/store/lessonStore";
 
-export const LessonSidebar = ({ className = "w-80" }: { className?: string }) => {
+export const LessonSidebar = ({ className = "" }: { className?: string }) => {
   const selectedModule = useLessonStore(selectSelectedModule);
   const selectedLesson = useLessonStore(selectSelectedLesson);
   const setSelectedLesson = useLessonStore((state) => state.setSelectedLesson);
@@ -17,7 +17,7 @@ export const LessonSidebar = ({ className = "w-80" }: { className?: string }) =>
 
   if (!selectedModule || !selectedLesson) {
     return (
-      <aside className={`${className} bg-sidebar border-l border-sidebar-border flex flex-col items-center justify-center`}>
+      <aside className={`${className} bg-sidebar border-l border-sidebar-border flex flex-col items-center justify-center h-full w-full`}>
         <div className="text-center text-muted-foreground">
           <BookOpen className="w-8 h-8 mx-auto mb-2 opacity-50" />
           <p className="text-sm">Select a lesson to begin</p>
@@ -32,7 +32,7 @@ export const LessonSidebar = ({ className = "w-80" }: { className?: string }) =>
   const currentLessonIndex = selectedModule.lessons.findIndex((l) => l.id === selectedLesson.id) + 1;
 
   return (
-    <aside className={`${className} bg-sidebar border-l border-sidebar-border flex flex-col`}>
+    <aside className={`${className} bg-sidebar border-l border-sidebar-border flex flex-col h-full w-full`}>
       {/* Header */}
       <div className="p-4 border-b border-sidebar-border">
         <div className="flex items-start justify-between gap-2">

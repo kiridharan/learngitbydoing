@@ -10,7 +10,7 @@ export const ModuleSidebar = () => {
   const getModuleProgress = useLessonStore((state) => state.getModuleProgress);
 
   return (
-    <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col">
+    <aside className="bg-sidebar border-r border-sidebar-border flex flex-col h-full w-full">
       <div className="p-4 border-b border-sidebar-border">
         <div className="flex items-center gap-2 text-muted-foreground text-sm font-medium">
           <Book className="w-4 h-4" />

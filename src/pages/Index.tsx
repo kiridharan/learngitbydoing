@@ -5,6 +5,7 @@ import { LessonSidebar } from "@/components/LessonSidebar";
 import { TerminalSimulator } from "@/components/TerminalSimulator";
 import { selectSelectedLesson, useLessonStore } from "@/store/lessonStore";
 import { useGitState } from "@/hooks/useGitState";
+import { PanelGroup, Panel, PanelResizeHandle } from "react-resizable-panels";
 import { useEffect } from "react";
 
 const Index = () => {
@@ -30,11 +31,26 @@ const Index = () => {
     <div className="flex flex-col h-screen bg-background overflow-hidden">
       <Header />
 
-      <div className="flex flex-1 overflow-hidden">
-        <ModuleSidebar />
-        {isAnimationLesson && <GitVisualization gitState={gitState} />}
-        <LessonSidebar className={isAnimationLesson ? "w-80" : "flex-1"} />
-      </div>
+      <PanelGroup direction="horizontal" className="flex-1 overflow-hidden">
+        <Panel defaultSize={15} minSize={10} className="flex">
+          <ModuleSidebar />
+        </Panel>
+
+        <PanelResizeHandle className="w-1 bg-border hover:bg-accent transition-colors" />
+
+        {isAnimationLesson && (
+          <>
+            <Panel defaultSize={40} minSize={20} className="flex">
+              <GitVisualization gitState={gitState} />
+            </Panel>
+            <PanelResizeHandle className="w-1 bg-border hover:bg-accent transition-colors" />
+          </>
+        )}
+
+        <Panel defaultSize={isAnimationLesson ? 45 : 85} minSize={20} className="flex">
+          <LessonSidebar />
+        </Panel>
+      </PanelGroup>
 
       {isAnimationLesson && (
         <TerminalSimulator
