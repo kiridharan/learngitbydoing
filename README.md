@@ -2,6 +2,11 @@
 
 Welcome to the Git-D3-Viz documentation. This folder contains comprehensive guides for understanding and working with the project.
 
+## Demo Video 
+
+![Watch the video](docs/demo.gif)
+
+
 ## Documentation Index
 
 - **[Project Overview](docs/PROJECT_OVERVIEW.md)** - High-level description of the project, its purpose, and key features
