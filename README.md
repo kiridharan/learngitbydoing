@@ -1,6 +1,6 @@
-# Git-D3-Viz Documentation
+# Learn Git By Doing
 
-Welcome to the Git-D3-Viz documentation. This folder contains comprehensive guides for understanding and working with the project.
+Welcome to the Learn Git by Doing documentation. This folder contains comprehensive guides for understanding and working with the project.
 
 ## Demo Video 
 
@@ -8,7 +8,7 @@ Welcome to the Git-D3-Viz documentation. This folder contains comprehensive guid
 
 ## Quick Links
 
-- [GitHub Repository](https://github.com/kiridharan/git-d3-viz)
+- [GitHub Repository](https://github.com/kiridharan/learngitbydoing)
 - [Contributing Guide](CONTRIBUTING.md)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 
