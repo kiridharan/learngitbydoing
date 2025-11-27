@@ -6,6 +6,11 @@ Welcome to the Git-D3-Viz documentation. This folder contains comprehensive guid
 
 ![Watch the video](docs/demo.gif)
 
+## Quick Links
+
+- [GitHub Repository](https://github.com/kiridharan/git-d3-viz)
+- [Contributing Guide](CONTRIBUTING.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
 
 ## Documentation Index
 
@@ -16,9 +21,6 @@ Welcome to the Git-D3-Viz documentation. This folder contains comprehensive guid
 - **[Development Guide](docs/DEVELOPMENT.md)** - Guidelines for developing and contributing to the project
 - **[API Reference](docs/API_REFERENCE.md)** - Types, interfaces, and data structures
 
-## Quick Links
-
-- [GitHub Repository](https://github.com/kiridharan/git-d3-viz)
 
 ## Tech Stack
 
