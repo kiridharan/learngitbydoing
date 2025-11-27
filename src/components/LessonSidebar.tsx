@@ -32,9 +32,9 @@ export const LessonSidebar = ({ className = "w-80" }: { className?: string }) =>
   const currentLessonIndex = selectedModule.lessons.findIndex((l) => l.id === selectedLesson.id) + 1;
 
   return (
-    <aside className={`${className} bg-sidebar border-l border-sidebar-border flex flex-col`}>
+    <aside className={`${className} bg-sidebar border-l border-sidebar-border flex flex-col`} data-tour="lessons-sidebar">
       {/* Header */}
-      <div className="p-4 border-b border-sidebar-border">
+      <div className="p-4 border-b border-sidebar-border" data-tour="lesson-content">
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-semibold text-foreground line-clamp-2">{selectedLesson.title}</h3>
           {selectedLesson.type && (
@@ -163,6 +163,7 @@ export const LessonSidebar = ({ className = "w-80" }: { className?: string }) =>
                       : "border border-transparent hover:bg-sidebar-accent text-foreground"
                     }
                   `}
+                  data-tour={index === 0 ? "lesson-item" : undefined}
                 >
                   <div className="flex items-center gap-2">
                     {lesson.completed ? (

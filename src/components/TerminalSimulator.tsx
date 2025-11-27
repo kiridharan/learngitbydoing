@@ -104,8 +104,8 @@ export const TerminalSimulator = ({
   };
 
   return (
-    <div className="h-64 bg-terminal-bg border-t border-border flex flex-col">
-      <div className="px-4 py-2 bg-terminal-bg/80 border-b border-border flex items-center justify-between">
+    <div className="h-64 bg-terminal-bg border-t border-border flex flex-col" data-tour="terminal-simulator">
+      <div className="px-4 py-2 bg-terminal-bg/80 border-b border-border flex items-center justify-between" data-tour="terminal-actions">
         <div className="flex items-center gap-2">
           <Terminal className="w-4 h-4 text-terminal-text" />
           <span className="text-sm font-semibold text-terminal-text">
@@ -113,7 +113,7 @@ export const TerminalSimulator = ({
           </span>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2" data-tour="terminal-actions">
           <Button
             variant="ghost"
             size="sm"
@@ -137,7 +137,7 @@ export const TerminalSimulator = ({
 
       <div className="flex-1 overflow-hidden">
         <ScrollArea className="h-full">
-          <div ref={scrollRef} className="p-4 space-y-1 font-mono text-sm">
+          <div ref={scrollRef} className="p-4 space-y-1 font-mono text-sm" data-tour="terminal-output">
             {terminalHistory.map((line, index) => (
               <div key={index} className="flex">
                 {line.type === "input" ? (
@@ -164,7 +164,9 @@ export const TerminalSimulator = ({
                 placeholder="Type a git command..."
                 spellCheck={false}
                 autoComplete="off"
+                data-tour="terminal-input"
               />
+              
             </div>
           </div>
         </ScrollArea>

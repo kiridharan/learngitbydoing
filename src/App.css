@@ -40,3 +40,45 @@
 .read-the-docs {
   color: #888;
 }
+
+/* React Joyride Styles */
+.react-joyride__tooltip {
+  background-color: #1f2937 !important;
+  border-radius: 0.5rem !important;
+  padding: 1rem !important;
+  color: #f3f4f6 !important;
+  font-size: 0.875rem !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.react-joyride__button {
+  background-color: #3b82f6 !important;
+  border-radius: 0.375rem !important;
+  color: white !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.875rem !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+.react-joyride__button:hover {
+  background-color: #2563eb !important;
+}
+
+.react-joyride__button--secondary {
+  background-color: #6b7280 !important;
+}
+
+.react-joyride__button--secondary:hover {
+  background-color: #4b5563 !important;
+}
+
+.react-joyride__beacon {
+  background-color: #3b82f6 !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3) !important;
+}
+
+.react-joyride__overlay {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
