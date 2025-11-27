@@ -7,7 +7,7 @@ export const Header = () => {
   return (
     <header className="bg-black px-6 py-4 flex items-center justify-between border-b border-border">
       <div className="flex items-center gap-2">
-        <GitBranch className="w-6 h-6 text-primary-foreground" />
+        <img src="/favicon.svg" alt="Git Logo" className="w-6 h-6" />
         <h1 className="text-xl font-bold text-primary-foreground">Git Learning Platform</h1>
       </div>
       
