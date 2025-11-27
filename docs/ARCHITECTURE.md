@@ -19,14 +19,15 @@ Components are organized into two categories:
 - **TerminalSimulator.tsx** - Interactive terminal interface
 
 #### UI Component Library (`src/components/ui/`)
-Pre-built shadcn-ui components providing:
-- Form controls (input, checkbox, select, etc.)
-- Layout components (card, accordion, tabs, etc.)
-- Dialogs and modals
-- Navigation elements
-- Tooltips and popovers
+Curated shadcn-ui components currently in use:
+- Form controls (input, label, toggle)
+- Layout components (card, tabs, scroll-area, sheet, separator)
+- Data display (badge, progress, skeleton)
+- Dialogs (dialog)
+- Notifications (toast, toaster, sonner)
+- Utilities (tooltip, button)
 
-All UI components use Radix UI primitives and are styled with Tailwind CSS.
+All UI components use Radix UI primitives and are styled with Tailwind CSS. Unused components have been removed to keep the codebase lean and maintainable.
 
 ### 2. **Routing Layer**
 

@@ -178,67 +178,58 @@ interface NavLinkProps {
 
 ## UI Component Library
 
-### Component Categories
+### Active Components (17 total)
+
+The following UI components from shadcn-ui are currently in use:
 
 #### **Forms & Input**
 - `input.tsx` - Text input field
-- `textarea.tsx` - Multi-line text
-- `checkbox.tsx` - Checkbox input
-- `radio-group.tsx` - Radio buttons
-- `select.tsx` - Dropdown select
-- `toggle.tsx` - Toggle switch
-- `switch.tsx` - Toggle switch component
-- `form.tsx` - Form wrapper
 - `label.tsx` - Form labels
-- `input-otp.tsx` - One-time password input
+- `toggle.tsx` - Toggle switch
 
 #### **Layout & Structure**
 - `card.tsx` - Card container
-- `accordion.tsx` - Collapsible accordion
 - `tabs.tsx` - Tabbed interface
 - `separator.tsx` - Divider line
 - `scroll-area.tsx` - Scrollable container
-- `resizable.tsx` - Resizable panels
-- `sidebar.tsx` - Sidebar container
-- `breadcrumb.tsx` - Breadcrumb navigation
-
-#### **Navigation**
-- `navigation-menu.tsx` - Navigation menu
-- `menubar.tsx` - Menu bar
-- `pagination.tsx` - Pagination controls
-- `dropdown-menu.tsx` - Dropdown menu
-
-#### **Dialogs & Popups**
-- `dialog.tsx` - Modal dialog
-- `alert-dialog.tsx` - Alert dialog
-- `popover.tsx` - Popover tooltip
-- `hover-card.tsx` - Hover card
 - `sheet.tsx` - Side sheet/drawer
-- `drawer.tsx` - Drawer panel
 
 #### **Data Display**
-- `table.tsx` - Data table
 - `badge.tsx` - Badge/pill
 - `progress.tsx` - Progress bar
-- `slider.tsx` - Range slider
-- `carousel.tsx` - Image carousel
-- `avatar.tsx` - User avatar
 - `skeleton.tsx` - Loading skeleton
-- `aspect-ratio.tsx` - Aspect ratio container
-- `chart.tsx` - Chart container
-- `command.tsx` - Command palette
+
+#### **Dialogs & Modals**
+- `dialog.tsx` - Modal dialog
 
 #### **Notifications**
 - `toast.tsx` - Toast notification
 - `toaster.tsx` - Toast container
 - `sonner.tsx` - Sonner toast system
-- `alert.tsx` - Alert message
 
 #### **Utilities**
 - `tooltip.tsx` - Tooltip component
-- `toggle-group.tsx` - Toggle group
-- `use-toast.ts` - Hook for toast notifications
-- `use-mobile.tsx` - Mobile detection hook
+- `button.tsx` - Button component
+
+### Removed Components
+
+The following 30 unused UI components have been removed to reduce bundle size and maintenance overhead:
+
+**Forms**: textarea, checkbox, radio-group, select, switch, form, input-otp
+
+**Layout**: accordion, resizable, sidebar, breadcrumb
+
+**Navigation**: navigation-menu, menubar, pagination, dropdown-menu, context-menu
+
+**Dialogs**: alert-dialog, popover, hover-card, drawer
+
+**Data Display**: table, slider, carousel, avatar, aspect-ratio, chart, command
+
+**Notifications**: alert
+
+**Utilities**: toggle-group, use-toast, use-mobile
+
+**Rationale**: Components were removed as they were not used in the current codebase. This keeps the project lean and focused on active functionality.
 
 ### Using UI Components
 
@@ -267,34 +258,19 @@ export function MyComponent() {
 
 ## Custom Hooks
 
-### use-mobile
+Custom hooks are minimal. The project primarily uses React built-in hooks (useState, useEffect, useRef) and hooks provided by integrated libraries (React Router, React Query).
 
-**Location**: `src/hooks/use-mobile.tsx`
+### Toast Notifications (via Sonner)
 
-**Purpose**: Detect if device is mobile.
+Toast notifications are handled through the Sonner library:
 
-**Returns**: `boolean` - true if mobile device
-
-**Usage**:
 ```typescript
-const isMobile = useMobile();
-```
+import { toast } from "sonner";
 
-### use-toast
-
-**Location**: `src/hooks/use-toast.ts`
-
-**Purpose**: Show toast notifications.
-
-**Returns**: `{ toast: Function }` - Toast function
-
-**Usage**:
-```typescript
-const { toast } = useToast();
-toast({
-  title: "Success",
-  description: "Operation completed",
-});
+// Usage
+toast.success("Success message");
+toast.error("Error message");
+toast.loading("Loading...");
 ```
 
 ## Component Patterns
@@ -306,25 +282,6 @@ const [value, setValue] = useState("");
 <Input value={value} onChange={(e) => setValue(e.target.value)} />
 ```
 
-### Render Props Pattern
-
-Some components support render props for flexibility:
-
-```typescript
-<Select value={selected} onValueChange={setSelected}>
-  <SelectTrigger>
-    <SelectValue placeholder="Select option" />
-  </SelectTrigger>
-  <SelectContent>
-    {options.map(opt => (
-      <SelectItem key={opt.id} value={opt.id}>
-        {opt.label}
-      </SelectItem>
-    ))}
-  </SelectContent>
-</Select>
-```
-
 ### Composition Pattern
 
 ```typescript
@@ -334,6 +291,19 @@ Some components support render props for flexibility:
   </CardHeader>
   <CardContent>Content</CardContent>
 </Card>
+```
+
+### Tabs Component
+
+```typescript
+<Tabs defaultValue="tab1">
+  <TabsList>
+    <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+  </TabsList>
+  <TabsContent value="tab1">Content 1</TabsContent>
+  <TabsContent value="tab2">Content 2</TabsContent>
+</Tabs>
 ```
 
 ## Best Practices

@@ -8,6 +8,7 @@ import { modules } from "@/lessons/lessons";
 export interface LessonStoreState {
   // Data
   modules: EnhancedModule[];
+  lastSyncHash: string; // Hash of lesson data to detect changes
 
   // Selection state
   selectedModuleId: string | null;
@@ -21,6 +22,7 @@ export interface LessonStoreState {
   resetProgress: () => void;
   getModuleProgress: (moduleId: string) => number; // Returns percentage
   getTotalProgress: () => number; // Returns percentage
+  syncLessonData: () => void; // Sync lesson data while preserving user progress
 }
 
 // Selector functions (use these in components for reactivity)
@@ -35,8 +37,56 @@ export const selectSelectedLesson = (state: LessonStoreState): EnhancedLesson | 
   return selectedModule.lessons.find((l) => l.id === state.selectedLessonId) || null;
 };
 
+// Utility function to generate hash of lesson data
+function generateLessonHash(modulesData: EnhancedModule[]): string {
+  try {
+    const dataStr = JSON.stringify(modulesData.map(m => ({
+      id: m.id,
+      lessons: m.lessons.map(l => ({ id: l.id, title: l.title }))
+    })));
+    let hash = 0;
+    for (let i = 0; i < dataStr.length; i++) {
+      const char = dataStr.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash;
+    }
+    return hash.toString();
+  } catch (error) {
+    return "0";
+  }
+}
+
+// Utility function to merge new lesson data with persisted user progress
+function mergeWithUserProgress(
+  newModules: EnhancedModule[],
+  persistedModules: EnhancedModule[]
+): EnhancedModule[] {
+  return newModules.map((newModule) => {
+    const persistedModule = persistedModules.find((m) => m.id === newModule.id);
+    if (!persistedModule) return newModule;
+
+    return {
+      ...newModule,
+      lessons: newModule.lessons.map((newLesson) => {
+        const persistedLesson = persistedModule.lessons.find(
+          (l) => l.id === newLesson.id
+        );
+        // Preserve completion status if lesson exists in persisted data
+        if (persistedLesson) {
+          return {
+            ...newLesson,
+            completed: persistedLesson.completed,
+          };
+        }
+        return newLesson;
+      }),
+    };
+  });
+}
+
 // Initial lesson data
 const initialModules: EnhancedModule[] = modules; // Import from lessons.ts
+const initialHash = generateLessonHash(initialModules);
 
 // Create the Zustand store with persistence
 export const useLessonStore = create<LessonStoreState>()(
@@ -44,6 +94,7 @@ export const useLessonStore = create<LessonStoreState>()(
     (set, get) => ({
       // Initial state
       modules: initialModules,
+      lastSyncHash: initialHash,
       selectedModuleId: "1", // Default to first module
       selectedLessonId: "1-1", // Default to first lesson
 
@@ -86,6 +137,7 @@ export const useLessonStore = create<LessonStoreState>()(
       resetProgress: () => {
         set({
           modules: initialModules,
+          lastSyncHash: initialHash,
           selectedModuleId: "1",
           selectedLessonId: "1-1",
         });
@@ -107,6 +159,22 @@ export const useLessonStore = create<LessonStoreState>()(
         );
         if (totalLessons === 0) return 0;
         return Math.round((completedLessons / totalLessons) * 100);
+      },
+
+      // Sync lesson data from lessons.ts while preserving user progress
+      syncLessonData: () => {
+        const currentHash = generateLessonHash(modules);
+        const state = get();
+
+        // Only sync if lesson data has changed
+        if (currentHash !== state.lastSyncHash) {
+          const mergedModules = mergeWithUserProgress(modules, state.modules);
+          set({
+            modules: mergedModules,
+            lastSyncHash: currentHash,
+          });
+          console.log("✓ Lesson data synced while preserving user progress");
+        }
       },
     }),
     {

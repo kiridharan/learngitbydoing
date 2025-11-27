@@ -5,10 +5,17 @@ import { LessonSidebar } from "@/components/LessonSidebar";
 import { TerminalSimulator } from "@/components/TerminalSimulator";
 import { selectSelectedLesson, useLessonStore } from "@/store/lessonStore";
 import { useGitState } from "@/hooks/useGitState";
+import { useEffect } from "react";
 
 const Index = () => {
   const selectedLesson = useLessonStore(selectSelectedLesson);
+  const syncLessonData = useLessonStore((state) => state.syncLessonData);
   const isAnimationLesson = selectedLesson?.type === 'animation';
+
+  // Sync lesson data on component mount to ensure latest lesson data with persisted user progress 
+  useEffect(() => {
+    syncLessonData();
+  }, [syncLessonData]);
 
   // Git state management
   const {
