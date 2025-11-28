@@ -1,8 +1,10 @@
 import { Terminal, Trash2, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useState, useRef, useEffect, KeyboardEvent } from "react";
+import { useState, useRef, useEffect, KeyboardEvent, useCallback, memo } from "react";
 import { TerminalLine } from "@/types/git.types";
+import { TERMINAL_CONFIG } from "@/config/constants";
+import { useBreakpoint } from "@/lib/responsive";
 
 interface TerminalSimulatorProps {
   terminalHistory: TerminalLine[];
@@ -22,6 +24,10 @@ export const TerminalSimulator = ({
   const [historyIndex, setHistoryIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const breakpoint = useBreakpoint();
+
+  // Get responsive terminal height
+  const terminalHeight = breakpoint === 'tablet' ? TERMINAL_CONFIG.height.tablet : TERMINAL_CONFIG.height.desktop;
 
   // Auto-scroll to bottom when new output appears
   useEffect(() => {
@@ -35,7 +41,7 @@ export const TerminalSimulator = ({
     inputRef.current?.focus();
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     if (!currentInput.trim()) return;
 
     // Execute the command
@@ -47,7 +53,7 @@ export const TerminalSimulator = ({
 
     // Clear input
     setCurrentInput("");
-  };
+  }, [currentInput, onExecuteCommand]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -83,6 +89,10 @@ export const TerminalSimulator = ({
       if (currentInput === "gi" || currentInput === "g") {
         setCurrentInput("git ");
       }
+    } else if (e.key === "l" && (e.ctrlKey || e.metaKey)) {
+      // Ctrl+L or Cmd+L to clear terminal
+      e.preventDefault();
+      onClear();
     }
   };
 
@@ -104,7 +114,12 @@ export const TerminalSimulator = ({
   };
 
   return (
-    <div className="h-64 bg-terminal-bg border-t border-border flex flex-col">
+    <div
+      className="bg-terminal-bg border-t border-border flex flex-col transition-all duration-300"
+      style={{ height: `${terminalHeight}px` }}
+      role="region"
+      aria-label="Terminal Simulator"
+    >
       <div className="px-4 py-2 bg-terminal-bg/80 border-b border-border flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Terminal className="w-4 h-4 text-terminal-text" />
