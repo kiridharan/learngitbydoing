@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import { GitState } from "@/types/git.types";
 import { ANIMATION_CONFIG, createAnimatedCommitNode } from "./animations";
+import { animateFileAppear } from "./d3Animations";
 
 /**
  * Renders the working directory section
@@ -33,15 +34,9 @@ export const renderWorkingDirectory = (
     .attr("font-weight", "bold")
     .text("Working Directory");
 
-  // Files
+  // Files - with animation
   workingDirectory.forEach((file, i) => {
-    g.append("text")
-      .attr("x", 60)
-      .attr("y", areaY + 40 + i * 15)
-      .attr("fill", "hsl(var(--muted-foreground))")
-      .attr("font-size", "10px")
-      .attr("font-family", "monospace")
-      .text(`📄 ${file.name}`);
+    animateFileAppear(g, file, 60, areaY + 40, i);
   });
 };
 
@@ -76,15 +71,24 @@ export const renderStagingArea = (
     .attr("font-weight", "bold")
     .text("Staging Area");
 
-  // Files
+  // Files - with animation
   stagingArea.forEach((file, i) => {
-    g.append("text")
+    const fileText = g
+      .append("text")
       .attr("x", 310)
       .attr("y", areaY + 40 + i * 15)
       .attr("fill", "hsl(var(--git-orange))")
       .attr("font-size", "10px")
       .attr("font-family", "monospace")
+      .attr("opacity", 0)
       .text(`📄 ${file.name}`);
+
+    // Fade in animation for staged files
+    fileText
+      .transition()
+      .duration(400)
+      .delay(i * 50)
+      .attr("opacity", 1);
   });
 };
 
@@ -99,8 +103,8 @@ export const renderCommitConnections = (
   startX: number
 ) => {
   commits.forEach((commit, i) => {
-    if (commit.parent) {
-      const parentIndex = commits.findIndex((c) => c.hash === commit.parent);
+    if (commit.parents) {
+      const parentIndex = commits.findIndex((c) => commit.parents.includes(c.hash));
       if (parentIndex !== -1) {
         g.append("line")
           .attr("x1", startX + parentIndex * commitSpacing)

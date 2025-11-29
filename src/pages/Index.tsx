@@ -9,6 +9,7 @@ import { PanelGroup, Panel, PanelResizeHandle } from "react-resizable-panels";
 import { useEffect } from "react";
 import { useBreakpoint } from "@/lib/responsive";
 import { PANEL_CONFIG } from "@/config/constants";
+import { WelcomeTour } from "@/components/WelcomeTour";
 
 const Index = () => {
   const selectedLesson = useLessonStore(selectSelectedLesson);
@@ -46,54 +47,57 @@ const Index = () => {
     return breakpoint === 'tablet' ? PANEL_CONFIG.lesson.tabletSize : PANEL_CONFIG.lesson.defaultSize;
   };
 
+  const moduleSize = getModuleSize();
+  const vizSize = getVisualizationSize();
+  const lessonSize = getLessonSize();
+
   return (
     <div className="flex flex-col h-screen bg-background overflow-hidden">
+      <WelcomeTour />
       <Header />
 
       <PanelGroup direction="horizontal" className="flex-1 overflow-hidden">
-        <Panel
-          defaultSize={getModuleSize()}
-          minSize={PANEL_CONFIG.module.minSize}
-          maxSize={PANEL_CONFIG.module.maxSize}
-          className="flex"
-        >
-          <ModuleSidebar />
+        <Panel defaultSize={moduleSize} minSize={PANEL_CONFIG.module.minSize} className="flex">
+          <div className="module-sidebar w-full">
+            <ModuleSidebar />
+          </div>
         </Panel>
 
         <PanelResizeHandle className="panel-resize-handle" />
 
-        {isAnimationLesson && (
-          <>
-            <Panel
-              defaultSize={getVisualizationSize()}
-              minSize={PANEL_CONFIG.visualization.minSize}
-              maxSize={PANEL_CONFIG.visualization.maxSize}
-              className="flex"
-            >
+        {/* {isAnimationLesson && ( */}
+        <>
+          <Panel defaultSize={vizSize} minSize={PANEL_CONFIG.visualization.minSize} className="flex">
+            <div className="git-visualization w-full h-full z-0">
               <GitVisualization gitState={gitState} />
-            </Panel>
-            <PanelResizeHandle className="panel-resize-handle" />
-          </>
-        )}
+            </div>
+          </Panel>
+          <PanelResizeHandle className="panel-resize-handle" />
+        </>
+        {/* )} */}
 
         <Panel
-          defaultSize={getLessonSize()}
+          defaultSize={lessonSize}
           minSize={PANEL_CONFIG.lesson.minSize}
           maxSize={isAnimationLesson ? PANEL_CONFIG.lesson.maxSize : PANEL_CONFIG.lessonFull.maxSize}
           className="flex"
         >
-          <LessonSidebar />
+          <div className="lesson-sidebar w-full">
+            <LessonSidebar />
+          </div>
         </Panel>
       </PanelGroup>
 
-      {isAnimationLesson && (
+      {/* {isAnimationLesson && ( */}
+      <div className="terminal-simulator">
         <TerminalSimulator
           terminalHistory={terminalHistory}
           onExecuteCommand={executeCommand}
           onClear={clearTerminal}
           onReset={resetRepository}
         />
-      )}
+      </div>
+      {/* )} */}
     </div>
   );
 };

@@ -38,7 +38,7 @@ export interface GitCommit {
   message: string;
   author: string;
   timestamp: number;
-  parent: string | null;
+  parents: string[]; // Array to support merge commits with multiple parents
   files: GitFile[];
   branch: string;
 }

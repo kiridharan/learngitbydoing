@@ -39,3 +39,18 @@ Welcome to the Learn Git by Doing documentation. This folder contains comprehens
 4. Open `http://localhost:5173` in your browser
 
 For detailed setup instructions, see [Setup & Installation](docs/SETUP.md).
+
+
+<!-- 🔧 What's Left (Quick Integration)
+Copy merge/reset functions into 
+gitStateManager.ts
+Add merge/reset handlers to 
+useGitState.ts
+ switch statement
+Export the new functions
+Test in the terminal
+Would you like me to:
+
+A) Complete the integration now (15-20 min)
+B) Move on to Option 2 (building animations)
+C) Pause and let you review what's been done -->

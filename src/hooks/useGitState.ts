@@ -11,6 +11,9 @@ import {
     createBranch,
     listBranches,
     checkoutBranch,
+    mergeBranch,
+    resetStaging,
+    resetToCommit,
 } from '@/services/gitStateManager';
 
 export function useGitState() {
@@ -93,6 +96,19 @@ export function useGitState() {
                     result = checkoutBranch(gitState, command.args[0]);
                     break;
 
+                case 'merge':
+                    result = mergeBranch(gitState, command.args[0]);
+                    break;
+
+                case 'reset':
+                    // Check for --hard flag
+                    if (command.flags.hard && command.args.length > 0) {
+                        result = resetToCommit(gitState, command.args[0]);
+                    } else {
+                        result = resetStaging(gitState);
+                    }
+                    break;
+
                 case 'help':
                     result = {
                         success: true,
@@ -141,6 +157,21 @@ export function useGitState() {
                             {
                                 type: 'info',
                                 text: '  git checkout <branch>       - Switch branch',
+                                timestamp: Date.now(),
+                            },
+                            {
+                                type: 'info',
+                                text: '  git merge <branch>          - Merge branch',
+                                timestamp: Date.now(),
+                            },
+                            {
+                                type: 'info',
+                                text: '  git reset                   - Unstage all files',
+                                timestamp: Date.now(),
+                            },
+                            {
+                                type: 'info',
+                                text: '  git reset --hard <commit>   - Reset to commit',
                                 timestamp: Date.now(),
                             },
                         ],

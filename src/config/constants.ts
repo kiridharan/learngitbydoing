@@ -45,7 +45,7 @@ export const PANEL_CONFIG = {
   lessonFull: {
     defaultSize: 85,
     minSize: 60,
-    maxSize: 90,
+    maxSize: 70,
   },
 } as const;
 
