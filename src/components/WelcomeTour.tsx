@@ -19,7 +19,7 @@ interface TourStep {
 
 const tourSteps: TourStep[] = [
     {
-        title: "Welcome to Git D3 Viz! 👋",
+        title: "Welcome to Git Viz! 🎉",
         description:
             "Learn Git visually with interactive lessons and real-time visualizations. Let's take a quick tour!",
         position: "center",
@@ -41,7 +41,7 @@ const tourSteps: TourStep[] = [
     {
         title: "Real-Time Visualization 🎨",
         description:
-            "Watch your commits, branches, and merges come to life with beautiful D3.js animations!",
+            "Watch your commits, branches, and merges come to life with beautiful  animations!",
         target: ".git-visualization",
         position: "right",
     },
